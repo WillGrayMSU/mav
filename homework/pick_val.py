@@ -16,9 +16,9 @@ def pick_val(
   # The sequence to pick from.
   seq,
   #
-  # The index of the element to select, measured from the end of the list. That
-  # is, 1 refers to the last item in seq, 2 to the second item from the end,
-  # etc. This parameter defaults to the 4th from the end.
+  # The index of the element to select, measured from the end of the list. That is,
+  # 1 refers to the last item in seq, 2 to the second item from the end, etc.
+  # This parameter defaults to the 4th from the end.
   #
   # * If the sequence is shorter than 4 elements, select the third, second,
   #   first, or raise an IndexError exception if the sequence is empty.
@@ -37,8 +37,8 @@ def pick_val(
     # Uses the passed index value
     else:
         myindex = 0 - index
-    value = seq[myindex]
-    return value
+    else:
+        raise TypeError
 
 # Tests
 # =====
@@ -46,6 +46,7 @@ class TestPickVal(object):
     # Test picking from a list with > 4 elements.
     def test_1(self):
         assert pick_val(range(10)) == 6
+        assert pick_val(range(10),-6) == 6
 
     # Test picking from a list with exactly 4 elements.
     def test_2(self):
@@ -107,3 +108,4 @@ def run_tests():
 
 if __name__ == '__main__':
     run_tests()
+
