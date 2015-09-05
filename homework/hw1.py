@@ -3,7 +3,7 @@
 # ********************************
 # hw1.py -- Homework 1 assignment.
 # ********************************
-# This file must be named ``hw1.py``; none of the function names below are allowed
+# This file must be named hw1.py; none of the function names below are allowed
 # to change.
 #
 # Code skeleton
@@ -13,9 +13,9 @@ def pick_val(
   # The sequence to pick from.
   seq,
   #
-  # The index of the element to select, measured from the end of the list. That
-  # is, 1 refers to the last item in seq, 2 to the second item from the end,
-  # etc. This parameter defaults to the 4th from the end.
+  # The index of the element to select, measured from the end of the list. That is,
+  # 1 refers to the last item in seq, 2 to the second item from the end, etc.
+  # This parameter defaults to the 4th from the end.
   #
   # * If the sequence is shorter than 4 elements, select the third, second,
   #   first, or raise an IndexError exception if the sequence is empty.
@@ -23,17 +23,29 @@ def pick_val(
   #   index == -2 returns seq[2]. Again, if the list is less than index in
   #   length, return an earlier value.
   index=4):
-    # Check the length of the sequence with the asked index value
-    seqlength = len(seq)
-    myindex = index
-    # Generates a good index value if the passed value is too large.
-    if abs(myindex) > seqlength:
-        myindex = 0 - seqlength
-    # Uses the passed index value
+
+    if isinstance(index, int):
+        if len(seq) < 4:
+            # Raise and index error if the sequence is empty.
+            if len(seq) == 0:
+                raise IndexError
+            # Select the first index if the sequence is less than 4.
+            elif len(seq) == 1:
+                return seq[-1]
+            elif len(seq) == 2:
+                return seq[-2]
+            elif len(seq) == 3:
+                return seq[-3]
+            
+        # If index references a location outside the range of the sequence, then select the 0th element.
+        elif len(seq) < abs(index):
+            return seq[0]
+        # Otherwise return the negative of index from the sequence.
+        else:
+            return seq[-index]
+    # If the index is not an integer, then raise a Type Error.
     else:
-        myindex = 0 - index
-    value = seq[myindex]
-    return value
+        raise TypeError
 
 # Tests
 # =====
@@ -41,6 +53,7 @@ class TestPickVal(object):
     # Test picking from a list with > 4 elements.
     def test_1(self):
         assert pick_val(range(10)) == 6
+        assert pick_val(range(10),-6) == 6
 
     # Test picking from a list with exactly 4 elements.
     def test_2(self):
@@ -97,3 +110,4 @@ def run_tests():
 
 if __name__ == '__main__':
     run_tests()
+
